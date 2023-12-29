@@ -99,7 +99,7 @@ export default function App() {
 
     <div className='w-[1000px] m-auto mt-14'>
 
-      <h1 className="text-center font-bold">Selector</h1>
+      <h1 className="text-center font-bold text-white">Selector</h1>
 
       <form  onSubmit={onSubmit}>
 
