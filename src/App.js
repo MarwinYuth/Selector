@@ -1,4 +1,4 @@
-import React, {useState } from 'react'
+import React, { useState } from 'react'
 import provincesJson from './Json/provinces.json'
 import districtsJson from './Json/districts.json'
 import communesJson from './Json/communes.json'
