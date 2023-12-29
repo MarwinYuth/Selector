@@ -12,12 +12,10 @@ export default function Result({provinces,districts,communes,villages,isVisible}
         
        <div className='text-center mt-14 m-auto'>
 
-        {provinces ? <p>{provinces.name.latin} / {provinces.name.km}</p> : ''}
-        {districts ? <p>{districts.name.latin} / {districts.name.km}</p> : ''}
-        {communes ? <p>{communes.name.latin} / {communes.name.km}</p> : ''}
-        {villages ? <p>{villages.name.latin} / {villages.name.km}</p> : ''}
-        
-        
+        <p>{provinces.name.latin} / {provinces.name.km}</p>
+        <p>{districts.name.latin} / {districts.name.km}</p>
+        <p>{communes.name.latin} / {communes.name.km}</p>
+        <p>{villages.name.latin} / {villages.name.km}</p>
 
     </div>
 

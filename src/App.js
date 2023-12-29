@@ -40,6 +40,9 @@ export default function App() {
     setSeletedProvince(province)
     setCommunes([])
     setVillage([])
+    setSeletedDistrict('')
+    setSeletedCommune('')
+    setSeletedVillage('')
   }
 
   const hanndleDistrictSelected = (districtId) => {
@@ -47,6 +50,8 @@ export default function App() {
     setCommunes(communesData.filter(com => com.id.startsWith(districtId)))
     setSeletedDistrict(district)
     setVillage([])
+    setSeletedCommune('')
+    setSeletedVillage('')
   }
 
   const handdleCommuneSelected = (communeId) => {
@@ -54,6 +59,7 @@ export default function App() {
     setSeletedCommune(commun.name.latin)
     setVillage(villageData.filter(village => village.id.startsWith(communeId)))
     setSeletedCommune(commun)
+    setSeletedVillage('')
   }
 
   const handdleVillageSelected = (villageId) => {
@@ -120,7 +126,7 @@ export default function App() {
 
         <div className='mt-4 ml-4'>
 
-          <button onClick={onClear} type='button' className='bg-blue-400 hover:bg-red-600 font-bold text-white p-2 rounded-lg'>Clear</button>
+          <button onClick={onClear} type='button' className='bg-blue-400 hover:bg-blue-600 font-bold text-white p-2 rounded-lg'>Clear</button>
         
         </div>
 
