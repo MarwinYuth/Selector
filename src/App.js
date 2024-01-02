@@ -11,10 +11,10 @@ export default function App() {
   const [communes,setCommunes] = useState([])
   const [villages,setVillages] = useState([])
 
-  const [isSelectedProvince,setIsSelectedProvince] = useState('')
-  const [isSelectedDistrict,setIsSelectedDistrict] = useState('')
-  const [isSelectedCommune,setIsSelectedCommune] = useState('')
-  const [isSelectedVillage,setIsSelectedVillage] = useState('')
+  const [SelectedProvince,setSelectedProvince] = useState('')
+  const [SelectedDistrict,setSelectedDistrict] = useState('')
+  const [SelectedCommune,setSelectedCommune] = useState('')
+  const [SelectedVillage,setSelectedVillage] = useState('')
 
   const [isResult,setIsResult] = useState(false)
 
@@ -35,12 +35,12 @@ export default function App() {
     try { 
       const districts = await axios.get('https://api.staging.goldenqueenhospital.com/v1/pumi/districts?parent_id=' + provinceId)
       setDistricts(districts.data.data)
-      setIsSelectedProvince(provinces.find(pro => pro.id === parseInt(provinceId)))
+      setSelectedProvince(provinces.find(pro => pro.id === parseInt(provinceId)))
       setCommunes([])
       setVillages([])
-      setIsSelectedDistrict('')
-      setIsSelectedCommune('')
-      setIsSelectedVillage('')
+      setSelectedDistrict('')
+      setSelectedCommune('')
+      setSelectedVillage('')
     } catch (error) {
       console.error('Error Fetching Districts',error)
     }
@@ -50,10 +50,10 @@ export default function App() {
     try {  
       const communes = await axios.get('https://api.staging.goldenqueenhospital.com/v1/pumi/communes?parent_id=' + districtId)
       setCommunes(communes.data.data)
-      setIsSelectedDistrict(districts.find(dis => dis.id === parseInt(districtId)))
+      setSelectedDistrict(districts.find(dis => dis.id === parseInt(districtId)))
       setVillages([])
-      setIsSelectedCommune('')
-      setIsSelectedVillage('')
+      setSelectedCommune('')
+      setSelectedVillage('')
     } catch (error) {
       console.error('Error Fetching Communes')
     }
@@ -63,22 +63,24 @@ export default function App() {
     try {
       const village = await axios.get('https://api.staging.goldenqueenhospital.com/v1/pumi/villages?parent_id=' + communeId)
       setVillages(village.data.data)
-      setIsSelectedCommune(communes.find(com => com.id === parseInt(communeId)))
-      setIsSelectedVillage('')
+      setSelectedCommune(communes.find(com => com.id === parseInt(communeId)))
+      setSelectedVillage('')
     } catch (error) {
       console.error('Error Feching Villages',error)
     }
   }
 
   const handleVillageSelected = (villageId) => {
-    setIsSelectedVillage(villages.find(village => village.id === parseInt(villageId)))
+
+    setSelectedVillage(villages.find(village => village.id === parseInt(villageId)))
+
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
 
     e.preventDefault()
 
-    if(!isSelectedProvince || !isSelectedDistrict || !isSelectedCommune || !isSelectedVillage){
+    if(!SelectedProvince || !SelectedDistrict || !SelectedCommune || !SelectedVillage){
       alert('Make sure all the filed is selected !')
       return null
     }
@@ -93,10 +95,10 @@ export default function App() {
 
   const onClear = async () => {
 
-    setIsSelectedProvince('')
-    setIsSelectedDistrict('')
-    setIsSelectedCommune('')
-    setIsSelectedVillage('')
+    setSelectedProvince('')
+    setSelectedDistrict('')
+    setSelectedCommune('')
+    setSelectedVillage('')
 
     setProvinces([])
     setDistricts([])
@@ -128,7 +130,6 @@ export default function App() {
 
         </div>
 
-
         <div className="flex">
 
         <div className='mt-4'>
@@ -147,7 +148,7 @@ export default function App() {
 
       </form>
 
-      <Result provinces={isSelectedProvince} districts={isSelectedDistrict} communes={isSelectedCommune} villages={isSelectedVillage} isVisible={isResult}/>
+      <Result provinces={SelectedProvince} districts={SelectedDistrict} communes={SelectedCommune} villages={SelectedVillage} isVisible={isResult}/>
      
     </div>
   )
