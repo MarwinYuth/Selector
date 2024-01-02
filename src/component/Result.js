@@ -14,10 +14,10 @@ export default function Result({provinces,districts,communes,villages,isVisible}
 
         <h1 className='font-bold mb-4'>Result</h1>
 
-        <p className='mt-2 font-bold'>{provinces.name.latin} / {provinces.name.km}</p>
-        <p className='mt-2 font-bold'>{districts.name.latin} / {districts.name.km}</p>
-        <p className='mt-2 font-bold'>{communes.name.latin} / {communes.name.km}</p>
-        <p className='mt-2 font-bold'>{villages.name.latin} / {villages.name.km}</p>
+        <p className='mt-2 font-bold'>{provinces.name} / {provinces.name_km}</p>
+        <p className='mt-2 font-bold'>{districts.name} / {districts.name_km}</p>
+        <p className='mt-2 font-bold'>{communes.name} / {communes.name_km}</p>
+        <p className='mt-2 font-bold'>{villages.name} / {villages.name_km}</p>
 
     </div>
 

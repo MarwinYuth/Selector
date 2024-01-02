@@ -1,98 +1,111 @@
-import React, { useState } from 'react'
-import provincesJson from './Json/provinces.json'
-import districtsJson from './Json/districts.json'
-import communesJson from './Json/communes.json'
-import villagesJson from './Json/villages.json'
+import React, { useEffect, useState } from 'react'
 import SelectComponent from './component/SelectComponent'
+import axios from 'axios'
 import Result from './component/Result'
 
-const extrator = (data) => {
-  return Object.keys(data).map(key => {
-    return{
-      id:key,
-      name:data[key].name
-    }
-  })
-}
-
-const provinceData = extrator(provincesJson.provinces)
-const districtData = extrator(districtsJson.districts)
-const communesData = extrator(communesJson.communes)
-const villageData = extrator(villagesJson.villages)
 
 export default function App() {
 
-  const [provinces,setProvinces] = useState(provinceData)
+  const [provinces,setProvinces] = useState([])
   const [districts,setDistricts] = useState([])
   const [communes,setCommunes] = useState([])
-  const [villages,setVillage] = useState([])
+  const [villages,setVillages] = useState([])
 
-  const [seletedProvince,setSeletedProvince] = useState()
-  const [seletedDistrict,setSeletedDistrict] = useState()
-  const [seletedCommune,setSeletedCommune] = useState()
-  const [seletedVillage,setSeletedVillage] = useState()
+  const [isSelectedProvince,setIsSelectedProvince] = useState('')
+  const [isSelectedDistrict,setIsSelectedDistrict] = useState('')
+  const [isSelectedCommune,setIsSelectedCommune] = useState('')
+  const [isSelectedVillage,setIsSelectedVillage] = useState('')
 
-  const [isresult,setIsResult] = useState(false)
+  const [isResult,setIsResult] = useState(false)
 
-  const handelProvineSelected = (provinceId) => {
-    const province = provinces.find(obj => obj.id === provinceId)
-    setDistricts(districtData.filter(dis => dis.id.startsWith(provinceId)))
-    setSeletedProvince(province)
-    setCommunes([])
-    setVillage([])
-    setSeletedDistrict('')
-    setSeletedCommune('')
-    setSeletedVillage('')
+  const fetchProvince =  async () => {
+    try {
+      const response = await axios.get('https://api.staging.goldenqueenhospital.com/v1/pumi')
+      setProvinces(response.data.data)
+    } catch (error) {
+      console.error('Error Fetching Provinces')
+    }
   }
 
-  const hanndleDistrictSelected = (districtId) => {
-    const district = districts.find(obj => obj.id === districtId)
-    setCommunes(communesData.filter(com => com.id.startsWith(districtId)))
-    setSeletedDistrict(district)
-    setVillage([])
-    setSeletedCommune('')
-    setSeletedVillage('')
+  useEffect(() => {
+    fetchProvince()
+  },[])
+
+  const handleProvinceSelected = async (provinceId) => {
+    try { 
+      const districts = await axios.get('https://api.staging.goldenqueenhospital.com/v1/pumi/districts?parent_id=' + provinceId)
+      setDistricts(districts.data.data)
+      setIsSelectedProvince(provinces.find(pro => pro.id === parseInt(provinceId)))
+      setCommunes([])
+      setVillages([])
+      setIsSelectedDistrict('')
+      setIsSelectedCommune('')
+      setIsSelectedVillage('')
+    } catch (error) {
+      console.error('Error Fetching Districts',error)
+    }
   }
 
-  const handdleCommuneSelected = (communeId) => {
-    const commun = communes.find(obj => obj.id === communeId)
-    setSeletedCommune(commun.name.latin)
-    setVillage(villageData.filter(village => village.id.startsWith(communeId)))
-    setSeletedCommune(commun)
-    setSeletedVillage('')
+  const handleDistrictSelected = async (districtId) => {
+    try {  
+      const communes = await axios.get('https://api.staging.goldenqueenhospital.com/v1/pumi/communes?parent_id=' + districtId)
+      setCommunes(communes.data.data)
+      setIsSelectedDistrict(districts.find(dis => dis.id === parseInt(districtId)))
+      setVillages([])
+      setIsSelectedCommune('')
+      setIsSelectedVillage('')
+    } catch (error) {
+      console.error('Error Fetching Communes')
+    }
   }
 
-  const handdleVillageSelected = (villageId) => {
-    const village = villages.find(obj => obj.id === villageId)
-    setSeletedVillage(village)
+  const handleCommunesSelected = async (communeId) => {
+    try {
+      const village = await axios.get('https://api.staging.goldenqueenhospital.com/v1/pumi/villages?parent_id=' + communeId)
+      setVillages(village.data.data)
+      setIsSelectedCommune(communes.find(com => com.id === parseInt(communeId)))
+      setIsSelectedVillage('')
+    } catch (error) {
+      console.error('Error Feching Villages',error)
+    }
   }
+
+  const handleVillageSelected = (villageId) => {
+    setIsSelectedVillage(villages.find(village => village.id === parseInt(villageId)))
+  };
 
   const onSubmit = (e) => {
 
     e.preventDefault()
 
-    if(!seletedProvince || !seletedDistrict || !seletedCommune || !seletedVillage){
-      alert('Make sure to selected all the field')
-      return
+    if(!isSelectedProvince || !isSelectedDistrict || !isSelectedCommune || !isSelectedVillage){
+      alert('Make sure all the filed is selected !')
+      return null
     }
-    
+
     setIsResult(true)
 
     setProvinces([])
     setDistricts([])
     setCommunes([])
-    setVillage([])
+    setVillages([])
   }
 
-  const onClear = () => {
+  const onClear = async () => {
 
-    setSeletedProvince('')
-    setSeletedDistrict('')
-    setSeletedCommune('')
-    setSeletedVillage('')
+    setIsSelectedProvince('')
+    setIsSelectedDistrict('')
+    setIsSelectedCommune('')
+    setIsSelectedVillage('')
+
+    setProvinces([])
+    setDistricts([])
+    setCommunes([])
+    setVillages([])
 
     setIsResult(false)
-    setProvinces(provinceData)
+    const response = await axios.get('https://api.staging.goldenqueenhospital.com/v1/pumi')
+    setProvinces(response.data.data)
   }
 
   return (  
@@ -105,13 +118,13 @@ export default function App() {
 
         <div className='flex justify-between'>
 
-          <SelectComponent label='Provinces' data={provinces} onSelected={handelProvineSelected}/>
+         <SelectComponent label='Provinces' data={provinces} onSelected={handleProvinceSelected}/>
 
-          <SelectComponent label='Districts' data={districts} onSelected={hanndleDistrictSelected}/>
-          
-          <SelectComponent label='Communes' data={communes} onSelected={handdleCommuneSelected}/>
+         <SelectComponent label='Districts' data={districts} onSelected={handleDistrictSelected}/>
 
-          <SelectComponent label='Village' data={villages} onSelected={handdleVillageSelected}/>
+         <SelectComponent label='Communes' data={communes} onSelected={handleCommunesSelected}/>
+
+         <SelectComponent label='Villages' data={villages} onSelected={handleVillageSelected}/>
 
         </div>
 
@@ -126,7 +139,7 @@ export default function App() {
 
         <div className='mt-4 ml-4'>
 
-          <button onClick={onClear} type='button' className='bg-blue-400 hover:bg-blue-600 font-bold text-white p-2 rounded-lg'>Clear</button>
+          <button type='button' onClick={onClear} className='bg-blue-400 hover:bg-blue-600 font-bold text-white p-2 rounded-lg'>Clear</button>
         
         </div>
 
@@ -134,7 +147,7 @@ export default function App() {
 
       </form>
 
-      <Result provinces={seletedProvince} districts={seletedDistrict} communes={seletedCommune} villages={seletedVillage} isVisible={isresult}/>
+      <Result provinces={isSelectedProvince} districts={isSelectedDistrict} communes={isSelectedCommune} villages={isSelectedVillage} isVisible={isResult}/>
      
     </div>
   )

@@ -6,22 +6,25 @@ export default function SelectComponent({label,data,onSelected}) {
     
     <div className='mt-14'>
 
-     <label htmlFor="" className='font-bold text-white'>{label}</label>
+     <label className='font-bold text-white mr-4'>{label}</label>
 
       <select className='w-[200px] p-2 mt-14'
       onChange={(e) => onSelected(e.target.value)}
       >
-        <option value='' className='font-bold'>Select {label}</option>  
+       
+       <option value="">Select {label}</option>
 
-          {
-            data.map((data) => {
-              return(
-                <option key={data.id} name={data.name} value={data.id}>
-                  {data.name.latin} / {data.name.km}
-                </option>
-              )
-            })
-          }
+       {
+          data.map(data => {
+            return(
+
+              <option key={data.id} value={data.id}>
+                {data.name} / {data.name_km}
+              </option>
+
+            )
+          })
+       }
         
       </select>
 
