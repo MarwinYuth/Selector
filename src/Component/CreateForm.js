@@ -36,7 +36,6 @@ export default function Form({data,setData,onMode}) {
     setChapters(updatedChapters);
   };
   
-
   const onAddChapter = () => {
     
     const newChapter = {
@@ -62,7 +61,6 @@ export default function Form({data,setData,onMode}) {
 
     setLessons([...lessons,newLesson])
   }
-
 
   const onSubmit = (e) => {
 
@@ -96,10 +94,14 @@ export default function Form({data,setData,onMode}) {
 
             {
                 chapters.map((chapter, chapterIndex) => {
+
                   return (
                     <div key={chapterIndex} className="Chapters">
                       <h1 className='font-bold text-white mb-4 text-[20px]'>Chapter</h1>
                       
+
+                      <span className='float-end text-white font-bold text-[20px]'>X</span>
+
                       <Input 
                         label='Title' 
                         placeholder='Title' 
@@ -124,6 +126,10 @@ export default function Form({data,setData,onMode}) {
                           return(
 
                             <div key={lessonIndex} className='Lessons w-[250px] m-auto'>
+
+
+                              <span className='float-end text-white font-bold text-[20px]'>X</span>
+
                     
                               <Input label='Name' placeholder='Lesson Name' name='lessonName' value={lesson.lessonName} onChange={(e) => handleLessonChange(e, chapterIndex, lessonIndex)}/>
               

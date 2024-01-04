@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Modal from './Modal'
 
-export default function ListPage({courses}) {
+export default function ListPage({courses,onDelete}) {
 
   const [popUp,setPopUp] = useState(false)  
 
@@ -19,6 +19,12 @@ export default function ListPage({courses}) {
   const onDismissModal = () => {
 
     setPopUp(false)
+
+  }
+
+  const onDeleteCourse = (courseId) => {
+
+    onDelete(prev => prev.filter(course => course.id !== courseId))
 
   }
 
@@ -64,8 +70,8 @@ export default function ListPage({courses}) {
                                     {course.totalChapter.length}
                                 </td>
             
-                                <td class="px-6 py-4">
-                                    <span className='cursor-pointer font-bold' onClick={() => onViewDetail(course.id)}>View</span> / <span className='cursor-pointer font-bold'>Delete</span>
+                                <td className="px-6 py-4">
+                                    <span className='cursor-pointer font-bold' onClick={() => onViewDetail(course.id)}>Edit</span> / <span onClick={() => onDeleteCourse(course.id)} className='cursor-pointer font-bold'>Delete</span>
                                 </td>
 
                             </tr>    
