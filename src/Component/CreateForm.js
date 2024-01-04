@@ -77,8 +77,6 @@ export default function Form({data,setData,onMode}) {
 
     setData(prev => [...prev,newCourses])
 
-    console.log(newCourses);
-
     setChapters([])
     setLessons([])
     setCourses({name:'',summarize:''})
@@ -86,9 +84,9 @@ export default function Form({data,setData,onMode}) {
   
   return (
 
-    <div className='Form border border-red-500'>
+    <div className='Form'>
        
-        <form class="max-w-sm mx-auto p-4">
+        <form className="max-w-sm mx-auto p-4">
 
             <h1 className='text-center font-bold text-[25px] text-white'>Add Courses</h1>
 
@@ -118,7 +116,7 @@ export default function Form({data,setData,onMode}) {
                         onChange={(e) => handleChapterChange(chapterIndex, 'note', e.target.value)} 
                       />
 
-                      <button type='button' onClick={() => onAddLesson(chapterIndex)} className='pl-4 pr-4 bg-purple-300 mb-4 font-white fo'>Add Lesson</button>
+                      <button type='button' onClick={() => onAddLesson(chapterIndex)} className='pl-4 pr-4 bg-purple-300 mb-4 text-white font-bold rounded-lg'>Add Lesson</button>
 
                       {
                         chapter.lessons.map((lesson,lessonIndex) => {

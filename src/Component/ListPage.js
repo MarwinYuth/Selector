@@ -12,11 +12,8 @@ export default function ListPage({courses}) {
 
     const course = courses.find(course => course.id === courseId)
 
-    console.log(course);
-
     setPopUp(true)
     setViewDetail(course)
-    
   }
 
   const onDismissModal = () => {
@@ -24,8 +21,6 @@ export default function ListPage({courses}) {
     setPopUp(false)
 
   }
-
-  console.log(courses)
 
   return (
 
@@ -70,7 +65,7 @@ export default function ListPage({courses}) {
                                 </td>
             
                                 <td class="px-6 py-4">
-                                    <span className='cursor-pointer font-bold' onClick={() => onViewDetail(course.id)}>Edit</span> / <span className='cursor-pointer font-bold'>Delete</span>
+                                    <span className='cursor-pointer font-bold' onClick={() => onViewDetail(course.id)}>View</span> / <span className='cursor-pointer font-bold'>Delete</span>
                                 </td>
 
                             </tr>    
