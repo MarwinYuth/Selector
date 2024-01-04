@@ -100,8 +100,6 @@ export default function Form({data,setData,onMode}) {
                       <h1 className='font-bold text-white mb-4 text-[20px]'>Chapter</h1>
                       
 
-                      <span className='float-end text-white font-bold text-[20px]'>X</span>
-
                       <Input 
                         label='Title' 
                         placeholder='Title' 
@@ -127,10 +125,6 @@ export default function Form({data,setData,onMode}) {
 
                             <div key={lessonIndex} className='Lessons w-[250px] m-auto'>
 
-
-                              <span className='float-end text-white font-bold text-[20px]'>X</span>
-
-                    
                               <Input label='Name' placeholder='Lesson Name' name='lessonName' value={lesson.lessonName} onChange={(e) => handleLessonChange(e, chapterIndex, lessonIndex)}/>
               
                               <Input label='Description' placeholder='Description' name='description' value={lesson.description} onChange={(e) => handleLessonChange(e, chapterIndex, lessonIndex)}/>
