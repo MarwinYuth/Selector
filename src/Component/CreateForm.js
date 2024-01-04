@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Input from './Input'
 
-export default function Form({data,setData,onMode}) {
+export default function Form({setData,onMode}) {
 
   const [courses,setCourses] = useState({name:'',summarize:'',title:'',note:'',lessonName:'',description:''})
 
@@ -68,9 +68,13 @@ export default function Form({data,setData,onMode}) {
 
     e.preventDefault()
 
-    console.log(chapters);
+    const newCourses = {
+      name:courses.name,
+      summarize:courses.summarize,
+      totalChapter:chapters
+    }
 
-    console.log(lessons);
+    setData(prev => [...prev,newCourses])
 
   }
   
