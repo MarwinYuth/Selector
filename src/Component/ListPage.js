@@ -12,8 +12,17 @@ export default function ListPage({courses}) {
 
     const course = courses.find(course => course.id === courseId)
 
+    console.log(course);
+
     setPopUp(true)
     setViewDetail(course)
+    
+  }
+
+  const onDismissModal = () => {
+
+    setPopUp(false)
+
   }
 
   console.log(courses)
@@ -74,7 +83,7 @@ export default function ListPage({courses}) {
 
         </table>
 
-        <Modal detail={viewDetail} isVisible={popUp}/>
+        <Modal detail={viewDetail} isVisible={popUp} onClose={onDismissModal}/>
       
     </div>
 

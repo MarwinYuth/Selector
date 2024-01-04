@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import Input from './Input'
 
-export default function Form({setData,onMode}) {
+export default function Form({data,setData,onMode}) {
 
-  const [courses,setCourses] = useState({name:'',summarize:'',title:'',note:'',lessonName:'',description:''})
+  const [courses,setCourses] = useState({name:'',summarize:''})
 
   const [chapters,setChapters] = useState([])
   const [lessons,setLessons] = useState([])
@@ -18,10 +18,10 @@ export default function Form({setData,onMode}) {
 
   }
 
-  const handleChapterChange = (index, field, value) => {
+  const handleChapterChange = (chapterIndex, field, value) => {
 
     const updatedChapters = [...chapters];
-    updatedChapters[index][field] = value;
+    updatedChapters[chapterIndex][field] = value;
     setChapters(updatedChapters);
 
   }
@@ -69,6 +69,7 @@ export default function Form({setData,onMode}) {
     e.preventDefault()
 
     const newCourses = {
+      id:data.length,
       name:courses.name,
       summarize:courses.summarize,
       totalChapter:chapters
@@ -76,6 +77,11 @@ export default function Form({setData,onMode}) {
 
     setData(prev => [...prev,newCourses])
 
+    console.log(newCourses);
+
+    setChapters([])
+    setLessons([])
+    setCourses({name:'',summarize:''})
   }
   
   return (
