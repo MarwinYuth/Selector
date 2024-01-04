@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 export default function Modal({detail,isVisible,onClose}) {
 
-
   const [lessons,setLessons] = useState([])
 
   const [selectChapterId,setSelectChapterId] = useState('')
@@ -72,7 +71,13 @@ export default function Modal({detail,isVisible,onClose}) {
     const lesson = chapter.lessons.find(les => les.id === parseInt(selectLessonId))
 
     lesson.lessonName = lessonValue
-    
+
+
+    setSelectChapterId('')
+    setSelectLessonId('')
+    setChapterValue('')
+    setLessonValue('')
+
   }
 
  
