@@ -5,7 +5,7 @@ export default function ListPage({courses}) {
 
   const [popUp,setPopUp] = useState(false)  
 
-  const [viewDetail,setViewDetail] = useState()
+  const [viewDetail,setViewDetail] = useState([])
 
 
   const onViewDetail = (courseId) => {
