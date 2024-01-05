@@ -44,10 +44,6 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
   }
 
-  const onClearChapter = () => {
-    setNewChapters([])
-  }
-
   const onAddNewChapter = () => {
 
     let id = detail.totalChapter.length
