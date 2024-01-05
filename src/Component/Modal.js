@@ -50,16 +50,19 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
   const onAddNewChapter = () => {
 
+    let id = detail.totalChapter.length
+    id += 1
+
     const newChapter = {
-      id:detail.totalChapter.length ++,
+      id:id,
       title:'',
       note:'',
       lessons:[]
     }
 
-    setNewChapters(prev => [...prev,newChapter])
+    console.log(newChapter);
 
-    console.log(newChapters);
+    setNewChapters(prev => [...prev,newChapter])
   }
 
   const onAddNewLesson = (chapterIndex) => {
@@ -68,7 +71,7 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
     const chapter = detail.totalChapter.find(chap => chap.id === parseInt(chapterIndex));
 
     const newLesson = {
-      id:chapter.lessons.length,
+      id:chapter.lessons.length ++,
       lessonName:'',
       description:''
     }
@@ -144,8 +147,16 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
   const onSubmitNewCourse = () => {
 
-    console.log(newChapters);
 
+    newChapters.forEach(chapterObject => {
+      
+      detail.totalChapter.push(chapterObject)
+
+    });
+
+    setNewChapters([])
+
+    console.log(detail);
   }
  
   return (
@@ -216,8 +227,6 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
                 <button type='button' onClick={onAddNewChapter} className='bg-purple-700 p-2 float-start text-white font-bold rounded-xl ml-4'>Add New Chapter</button>
 
-                <button type='button' onClick={onClearChapter}>Clear Chapter</button>
-
               </div>
 
             </form>
@@ -230,7 +239,7 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
                   return(
 
-                    <div className='mt-8'>
+                    <div key={chapterIndex} className='mt-8'>
 
                       <h1 className='font-bold text-[20px]'>Add New Chapter</h1>
 
@@ -245,7 +254,7 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
                           return(
 
-                            <div key={lessonIndex} className='Lessons w-[250px] m-auto mt-[65px]'>
+                            <div key={lessonIndex} className='Lessons w-[250px] m-auto mt-[25px]'>
 
                               <Input label='Lesson' name='lessonName' value={lesson.lessonName} placeholder='Lessons' onChange={(e) => onChangeLesson(e,chapterIndex,lessonIndex)}/>
 
