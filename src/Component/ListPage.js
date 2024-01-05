@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Modal from './Modal'
 
-export default function ListPage({courses,onDelete}) {
+export default function ListPage({courses,onCourseChange}) {
 
   const [popUp,setPopUp] = useState(false)  
 
@@ -24,7 +24,7 @@ export default function ListPage({courses,onDelete}) {
 
   const onDeleteCourse = (courseId) => {
 
-    onDelete(prev => prev.filter(course => course.id !== courseId))
+    onCourseChange(prev => prev.filter(course => course.id !== courseId))
 
   }
 
@@ -84,7 +84,7 @@ export default function ListPage({courses,onDelete}) {
 
         </table>
 
-        <Modal detail={viewDetail} isVisible={popUp} onClose={onDismissModal}/>
+        <Modal onDetailChange={onCourseChange} detail={viewDetail} isVisible={popUp} onClose={onDismissModal}/>
       
     </div>
 

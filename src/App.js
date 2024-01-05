@@ -19,7 +19,7 @@ export default function App() {
         </button>
         
 
-        {mode === 'list' ? <ListPage courses={courses} onDelete={setCourses}/> : <CreateForm data={courses} setData={setCourses} onMode={setMode}/>}
+        {mode === 'list' ? <ListPage courses={courses} onCourseChange={setCourses}/> : <CreateForm data={courses} setData={setCourses} onMode={setMode}/>}
 
       </div>
 
