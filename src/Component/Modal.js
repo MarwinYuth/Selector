@@ -141,6 +141,12 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
     setLessons([]);
   }
 
+
+  const onSubmitNewCourse = () => {
+
+    console.log(newChapters);
+
+  }
  
   return (
 
@@ -239,9 +245,11 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
                           return(
 
-                            <div className='Lessons w-[250px] m-auto mt-4'>
+                            <div key={lessonIndex} className='Lessons w-[250px] m-auto mt-[65px]'>
 
                               <Input label='Lesson' name='lessonName' value={lesson.lessonName} placeholder='Lessons' onChange={(e) => onChangeLesson(e,chapterIndex,lessonIndex)}/>
+
+                              <Input label='description' name='description' value={lesson.description} placeholder='Descriptions' onChange={(e) => onChangeLesson(e,chapterIndex,lessonIndex)}/>
 
                             </div>
 
@@ -253,10 +261,12 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
                     </div>
                     
                   )
-
+                    
                 })
+                
               }                
 
+              {newChapters.length > 0 && <button type='button' onClick={onSubmitNewCourse} className='float-end bg-blue-400 p-2 text-white font-bold rounded-lg'>Add New Courses</button>}   
 
             </form>
 
