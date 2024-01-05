@@ -8,6 +8,9 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
   //For set Lesson through Chpater is selected
   const [lessons,setLessons] = useState([])
+  //For set Lesson through Chpater is selected
+
+  const [coursesField,setCorsesField] = useState({coursename:detail.name,summarize:detail.summarize})
 
   const [selectChapterId,setSelectChapterId] = useState('')
   const [selectLessonId,setSelectLessonId] = useState('')
@@ -18,6 +21,15 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
   if(!isVisible){
     return null
   }  
+
+  const onChangeInput = (e) => {
+
+    const field = e.target.name
+    const value = e.target.value
+
+    setCorsesField({...coursesField,[field]:value})
+
+  }
 
   const onChangeChapter = (chapterIndex,field,value) => {
 
@@ -89,8 +101,6 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
       return null
     }
 
-    // setLessons([])
-
     const chapter = detail.totalChapter.find(chap => chap.id === parseInt(chapterId))
 
     setSelectChapterId(chapterId)
@@ -121,17 +131,21 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
     e.preventDefault()
 
-    if(!chapterEditValue || !lessonEditValue){
-      return null
-    }
+    // if(!chapterEditValue || !lessonEditValue){
+    //   return null
+    // }
 
-    const chapter = detail.totalChapter.find(chap => chap.id === parseInt(selectChapterId))
+    detail.name = coursesField.coursename
 
-    chapter.title = chapterEditValue
+    detail.summarize = coursesField.summarize
 
-    const lesson = chapter.lessons.find(les => les.id === parseInt(selectLessonId))
+    // const chapter = detail.totalChapter.find(chap => chap.id === parseInt(selectChapterId))
 
-    lesson.lessonName = lessonEditValue  
+    // chapter.title = chapterEditValue
+
+    // const lesson = chapter.lessons.find(les => les.id === parseInt(selectLessonId))
+
+    // lesson.lessonName = lessonEditValue  
 
     setSelectChapterId('');
     setSelectLessonId('');
@@ -163,8 +177,9 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
             <h1 className='text-[30px] font-bold text-gray-600 mb-4'>Edit Chapter</h1>
             
-            <p className='font-bold mt-2 text-[30px]'><span className='text-gray-400'>Course</span> : {detail.name}</p>
-            <p className='mt-2 text-[15px] font-bold'><span className='text-gray-400'>Summarize</span> : {detail.summarize}</p>
+            <Input value={coursesField.coursename} name='coursename' onChange={onChangeInput}/>
+
+            <Input value={coursesField.summarize} name='summarize' onChange={onChangeInput}/>
 
             <select className='mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
             onChange={(e) => handleOnChapterSelect(e.target.value)}
@@ -266,7 +281,7 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
                     </div>
                     
                   )
-                    
+                  
                 })
                 
               }                
