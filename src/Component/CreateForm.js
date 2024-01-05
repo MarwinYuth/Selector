@@ -30,10 +30,10 @@ export default function Form({data,setData,onMode}) {
 
     const { name, value } = e.target;
   
-    const updatedChapters = [...chapters];
-    updatedChapters[chapterIndex].lessons[lessonIndex][name] = value;
+    const updateLessons = [...chapters];
+    updateLessons[chapterIndex].lessons[lessonIndex][name] = value;
   
-    setChapters(updatedChapters);
+    setChapters(updateLessons);
   };
   
   const onAddChapter = () => {

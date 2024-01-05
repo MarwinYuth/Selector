@@ -3,8 +3,8 @@ import Input from './Input'
 
 export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
-  const [newChapter,setNewChapter] = useState([])
-  const [newLessons,setNewLesson] = useState([])
+  const [newChapters,setNewChapters] = useState([])
+  const [newLessons,setNewLessons] = useState([])
 
   //For set Lesson through Chpater is selected
   const [lessons,setLessons] = useState([])
@@ -21,11 +21,21 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
   const onChangeChapter = (chapterIndex,field,value) => {
 
-    const updateNewChapter = [...newChapter]
+    const updateNewChapter = [...newChapters]
     updateNewChapter[chapterIndex][field] = value
-    setNewChapter(updateNewChapter)
+    setNewChapters(updateNewChapter)
+  }
 
-    console.log(newChapter);
+  const onChangeLesson = (e,chapterIndex,lessonIndex) => {
+
+    const {name,value} = e.target
+
+    const updateLessons = [...newChapters]
+    updateLessons[chapterIndex].lessons[lessonIndex][name] = value
+    
+    setNewChapters(updateLessons)
+
+    console.log(newChapters);
   }
 
   const onModalProtected = (e) => {
@@ -35,7 +45,7 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
   }
 
   const onClearChapter = () => {
-    setNewChapter([])
+    setNewChapters([])
   }
 
   const onAddNewChapter = () => {
@@ -47,10 +57,26 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
       lessons:[]
     }
 
-    setNewChapter(prev => [...prev,newChapter])
+    setNewChapters(prev => [...prev,newChapter])
 
-    console.log(detail.totalChapter.length);
+    console.log(newChapters);
+  }
 
+  const onAddNewLesson = (chapterIndex) => {
+
+   
+    const chapter = detail.totalChapter.find(chap => chap.id === parseInt(chapterIndex));
+
+    const newLesson = {
+      id:chapter.lessons.length,
+      lessonName:'',
+      description:''
+    }
+    
+    const updateLesson = [...newChapters]
+    updateLesson[chapterIndex].lessons.push(newLesson);
+
+    setNewLessons([...newLessons,newLesson])
   }
 
   const handleOnChapterSelect = (chapterId) => {
@@ -120,7 +146,7 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
     <div onClick={onClose} className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
 
-        <div onClick={onModalProtected} className="bg-white p-8 text-center rounded-lg w-[500px] h-[500px] overflow-y-auto">
+        <div onClick={onModalProtected} className="bg-white p-8 text-center rounded-lg w-[500px] h-[700px] overflow-y-auto">
 
             <h1 className='text-[30px] font-bold text-gray-600 mb-4'>Edit Chapter</h1>
             
@@ -194,15 +220,35 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
             <form  className="max-w-sm mx-auto p-4">
 
               {
-                newChapter.map((chapter,chapterIndex) => {
+                newChapters.map((chapter,chapterIndex) => {
 
                   return(
 
-                    <div>
+                    <div className='mt-8'>
+
+                      <h1 className='font-bold text-[20px]'>Add New Chapter</h1>
 
                       <Input label='Chapter' value={chapter.title} placeholder='Chapter' onChange={(e) => onChangeChapter(chapterIndex,'title',e.target.value)}/>
                       
                       <Input label='Note' value={chapter.note} placeholder='Note' onChange={(e) => onChangeChapter(chapterIndex,'note',e.target.value)}/>
+
+                      <button type='button' onClick={() => onAddNewLesson(chapterIndex)} className='float-start bg-red-400 p-2 text-white font-bold rounded-lg'>Add Lesson</button>
+
+                      {
+                        chapter.lessons.map((lesson,lessonIndex) => {
+
+                          return(
+
+                            <div className='Lessons w-[250px] m-auto mt-4'>
+
+                              <Input label='Lesson' name='lessonName' value={lesson.lessonName} placeholder='Lessons' onChange={(e) => onChangeLesson(e,chapterIndex,lessonIndex)}/>
+
+                            </div>
+
+                          )
+
+                        })
+                      }
 
                     </div>
                     
