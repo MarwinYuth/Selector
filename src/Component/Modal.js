@@ -6,31 +6,24 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
   const [newChapters,setNewChapters] = useState([])
   const [newLessons,setNewLessons] = useState([])
 
-  //For set Lesson through Chpater is selected
-  const [lessons,setLessons] = useState([])
-  //For set Lesson through Chpater is selected
+  // const [coursesField,setCorsesField] = useState({name:detail.name,summarize:detail.summarize})
 
-  const [coursesField,setCorsesField] = useState({coursename:detail.name,summarize:detail.summarize})
-
-  const [selectChapterId,setSelectChapterId] = useState('')
-  const [selectLessonId,setSelectLessonId] = useState('')
-
-  const [chapterEditValue,setChapterEditValue] = useState('')
-  const [lessonEditValue,setLessonEditValue] = useState('')
 
   if(!isVisible){
     return null
   }  
 
-  const onChangeInput = (e) => {
+  // const onChangeInput = (e) => {
 
-    const field = e.target.name
-    const value = e.target.value
+  //   const field = e.target.name
+  //   const value = e.target.value
 
-    setCorsesField({...coursesField,[field]:value})
+  //   setCorsesField({...coursesField,[field]:value})
 
-  }
+  // }
 
+
+  //onChange New Chapter
   const onChangeChapter = (chapterIndex,field,value) => {
 
     const updateNewChapter = [...newChapters]
@@ -38,6 +31,8 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
     setNewChapters(updateNewChapter)
   }
 
+
+  //Onchange New Lesson
   const onChangeLesson = (e,chapterIndex,lessonIndex) => {
 
     const {name,value} = e.target
@@ -73,6 +68,7 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
     setNewChapters(prev => [...prev,newChapter])
   }
 
+
   const onAddNewLesson = (chapterIndex) => {
 
    
@@ -90,68 +86,14 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
     setNewLessons([...newLessons,newLesson])
   }
 
-  const handleOnChapterSelect = (chapterId) => {
-
-    if(chapterId === ''){
-      setSelectChapterId('')
-      setSelectLessonId('')
-      setChapterEditValue('')
-      setLessonEditValue('')
-      setLessons([])
-      return null
-    }
-
-    const chapter = detail.totalChapter.find(chap => chap.id === parseInt(chapterId))
-
-    setSelectChapterId(chapterId)
-
-    setChapterEditValue(chapter.title)
-
-    setLessons(chapter.lessons.filter(les => les))
-  }
-
-  const handleOnLessonSelect = (lessonId) => {
-
-    if(lessonId === ''){
-      setSelectLessonId('')
-      setLessonEditValue('')
-      return null
-    }
-
-    const chapter = detail.totalChapter.find(chap => chap.id === parseInt(selectChapterId))
-
-    const lesson = chapter.lessons.find(les => les.id === parseInt(lessonId))
-
-    setSelectLessonId(lessonId)
-    setLessonEditValue(lesson.lessonName)
-  }
-
 
   const onEdit = (e) => {
 
     e.preventDefault()
 
-    // if(!chapterEditValue || !lessonEditValue){
-    //   return null
-    // }
 
-    detail.name = coursesField.coursename
-
-    detail.summarize = coursesField.summarize
-
-    // const chapter = detail.totalChapter.find(chap => chap.id === parseInt(selectChapterId))
-
-    // chapter.title = chapterEditValue
-
-    // const lesson = chapter.lessons.find(les => les.id === parseInt(selectLessonId))
-
-    // lesson.lessonName = lessonEditValue  
-
-    setSelectChapterId('');
-    setSelectLessonId('');
-    setChapterEditValue('');
-    setLessonEditValue('');
-    setLessons([]);
+    // detail.name = coursesField.name
+    // detail.summarize = coursesField.summarize
   }
 
 
@@ -168,6 +110,7 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
     console.log(detail);
   }
+
  
   return (
 
@@ -177,60 +120,62 @@ export default function Modal({onDetailChange,detail,isVisible,onClose}) {
 
             <h1 className='text-[30px] font-bold text-gray-600 mb-4'>Edit Chapter</h1>
             
-            <Input value={coursesField.coursename} name='coursename' onChange={onChangeInput}/>
+            {/* <Input value={coursesField.name} name='name' onChange={onChangeInput}/>
 
-            <Input value={coursesField.summarize} name='summarize' onChange={onChangeInput}/>
-
-            <select className='mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-            onChange={(e) => handleOnChapterSelect(e.target.value)}
-            >
-
-              <option value=''>Select Chapter</option>
-              {
-                detail.totalChapter.map(chap => {
-                  return(
-
-                    <option key={chap.id} value={chap.id}>{chap.title}</option>
-
-                  )
-                })
-              }
-              
-            </select>
-
-           <div>
-
-            <select className='mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-            onChange={(e) => handleOnLessonSelect(e.target.value)}
-            >
-                <option value="">Select Lessons</option>
-                {
-                  lessons.map(lessons => {
-                    return(
-
-                      <option key={lessons.id} value={lessons.id}>{lessons.lessonName}</option>
-
-                    )
-                  })
-                }
-            </select>
-
-           </div>
-
+            <Input value={coursesField.summarize} name='summarize' onChange={onChangeInput}/> */}
+            
+            <h1 className='font-bold text-[25px]'>{detail.name}</h1>
+            <h1 className='font-bold text-[20px]'>{detail.summarize}</h1>
 
             <form className='mt-4'>
 
-              <label className='font-bold float-start'>Chapter</label>  
-              <input type="text" className="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:border-gray-600"
-              value={chapterEditValue}
-              onChange={(e) => setChapterEditValue(e.target.value)}
-              />
+              {
+                detail.totalChapter.map((chapter,chapterIndex) => {
 
-              <label className='font-bold float-start'>Lesson</label>  
-              <input type="text" className="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:border-gray-600"
-              value={lessonEditValue}
-              onChange={(e) => setLessonEditValue(e.target.value)}
-              />
+                  return(
+
+                    <div>
+
+                      <h1 className='text-center font-bold text-[25px]'>Chapter</h1>
+
+                      <label className='font-bold float-start'>Chapter</label>  
+                      <input type="text" className="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:border-gray-600"
+                        value={chapter.title}
+                      />
+
+                      <label className='font-bold float-start'>Note</label>  
+                      <input type="text" className="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:border-gray-600"
+                        value={chapter.note}
+                      />
+
+                      {
+                        chapter.lessons.map((lesson,lessonIndex) => {
+                          return(
+
+                            <div className='w-[300px] m-auto'>
+
+                              <label className='font-bold float-start'>LessonName</label>  
+                              <input type="text" className="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:border-gray-600"
+                                value={lesson.lessonName}
+                              />
+
+                              <label className='font-bold float-start'>Description</label>  
+                              <input type="text" className="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:border-gray-600"
+                                value={lesson.description}
+                              />
+
+                            </div>
+
+                          )
+                        })
+                      }
+                      
+                    </div>
+
+                  )
+
+                })
+              }
 
               <div>
 
