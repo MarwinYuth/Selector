@@ -79,6 +79,13 @@ export default function Form({data,setData,onMode}) {
     setLessons([])
     setCourses({name:'',summarize:''})
   }
+
+
+  const removeChapter = (chaterId) => {
+
+    setChapters(chapters.filter(chap => chap.id !== chaterId))
+
+  }
   
   return (
 
@@ -100,6 +107,7 @@ export default function Form({data,setData,onMode}) {
                       <h1 className='font-bold text-white mb-4 text-[20px]'>Chapter</h1>
                       
 
+                      <span onClick={() => removeChapter(chapterIndex)} className='float-end text-white font-bold text-[20px]'>X</span>
                       <Input 
                         label='Title' 
                         placeholder='Title' 
