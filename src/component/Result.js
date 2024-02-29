@@ -8,7 +8,7 @@ export default function Result({provinces,districts,communes,villages,isVisible}
 
   return (
 
-    <div className='Result'>
+    <div className='Results'>
         
        <div className='text-center mt-14 m-auto border-2 border-black rounded-lg w-[300px] bg-gray-100 p-8 shadow-xl'>
 
